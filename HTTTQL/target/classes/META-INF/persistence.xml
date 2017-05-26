@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="webthanh_WEBCNPM_war_0.0.1-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.nlu.dao.entity.Category</class>
+    <class>com.nlu.dao.entity.ProductComment</class>
+    <class>com.nlu.dao.entity.Enterprise</class>
+    <class>com.nlu.dao.entity.SubCategory</class>
+    <class>com.nlu.dao.entity.ProductCompany</class>
+    <class>com.nlu.dao.entity.OrderCart</class>
+    <class>com.nlu.dao.entity.Products</class>
+    <class>com.nlu.dao.entity.Expenses</class>
+    <class>com.nlu.dao.entity.UserDetails</class>
+    <class>com.nlu.dao.entity.UserAccount</class>
+    <class>com.nlu.dao.entity.Administrators</class>
+    <class>com.nlu.dao.entity.Sales</class>
+    <class>com.nlu.dao.entity.Images</class>
+    <class>com.nlu.dao.entity.Sysdiagrams</class>
+    <class>com.nlu.dao.entity.ChiTietCtdt</class>
+    <class>com.nlu.dao.entity.BoMon</class>
+    <class>com.nlu.dao.entity.DoKho</class>
+    <class>com.nlu.dao.entity.DeThi</class>
+    <class>com.nlu.dao.entity.CauHoi</class>
+    <class>com.nlu.dao.entity.CongViec</class>
+    <class>com.nlu.dao.entity.DapAn</class>
+    <class>com.nlu.dao.entity.CauTrucDeThi</class>
+    <class>com.nlu.dao.entity.ChiTietDeThi</class>
+    <class>com.nlu.dao.entity.MonHoc</class>
+    <class>com.nlu.dao.entity.ChuongMuc</class>
+    <class>com.nlu.dao.entity.Khoa</class>
+    <class>com.nlu.dao.entity.CtTaoCauHoi</class>
+    <class>com.nlu.dao.entity.LoaiCongViec</class>
+    <class>com.nlu.dao.entity.GiangVien</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=LAPTRINHNET"/>
+      <property name="javax.persistence.jdbc.user" value="sa"/>
+      <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+      <property name="javax.persistence.jdbc.password" value="1234"/>
+    </properties>
+  </persistence-unit>
+</persistence>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8" />
+</html>
+<!-- /dinh nghia thymeleaf -->
+
+<th:block th:if="${chuong}">
+	<div class="panel-body no-padding">
+		<table class="table table-striped" style="margin-bottom: 0px;">
+			<tbody>
+				<th:block th:each=" cauHoi: ${chuong.listCauHoi}  ">
+					<tr>
+						<td th:text="${cauHoi.noidung}"></td>
+						<td><a class="style-a pull-right" data-toggle="modal"
+							th:attr="data-target='#modal'+${cauHoi.mach}"><i
+								class="fa fa-eye"></i> Đáp án</a></td>
+					</tr>
+					<!-- /noi-dung-cau hoi -->
+					<div class="modal fade" th:id="'modal'+${cauHoi.mach}">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h4 class="modal-title text-center">Câu hỏi</h4>
+								</div>
+								<div class="modal-body">
+									<h4 th:text="${cauHoi.noidung}"></h4>
+									<hr />
+									<th:block th:each=" dapAn : ${cauHoi.list}">
+										<p>
+											<strong class="abc" th:attr="data-id=${dapAnStat.index}"></strong>.&nbsp;&nbsp;&nbsp;
+											<i class="text text-danger" th:if="${dapAn.dapandung}"
+												th:text="${dapAn.noidung}"></i> <i
+												th:unless="${dapAn.dapandung}" th:text="${dapAn.noidung}"></i>
+										</p>
+									</th:block>
+
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">Đóng</button>
+								</div>
+							</div>
+							<!-- /.modal-content -->
+						</div>
+						<!-- /.modal-dialog -->
+					</div>
+					<!-- ./noi-dung-cau-hoi -->
+
+				</th:block>
+
+			</tbody>
+		</table>
+	</div>
+
+
+</th:block>

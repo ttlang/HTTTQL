@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+<title>Insert title here</title>
+</head>
+<body>
+
+
+
+
+<select   name="bomon" class="form-control bomon" required="required">
+   <th:block th:each="e:${listbomon}"> 
+    <option th:value="${e.mabomon}" th:text="${e.tenbomon}" ></option>
+    </th:block>
+</select>
+ 
+
+</body>
+</html>

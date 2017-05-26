@@ -1,0 +1,216 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jQuery Tabullet Plugin Example</title>
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  
+    <script src="dist/js/jquery-2.1.4.js" type="text/javascript"></script>
+    <!--Load Json xoa edit-->
+<!--<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>-->
+ <script src="dist/Tabullet.js"></script>
+    <!--load json xoa edit-->
+    <style type="text/css" >
+        .table-responsive{
+           width: 100%;
+        }
+    </style>
+    <script>
+        $(function () {
+            var source = [
+                {id: 1, name: "Huỳnh tính thành", email: "K40cntt@gmail.com" , addresses:  "KTX Khu A ,", phone:  "0928431917"},
+                {id: 2, name: "Bùi thị bich trâm1", email: "K41cntt@gmail.com" ,addresses: "KTX Khu F ,", phone:  "0974613746"},
+                {id: 101, name: "Đồng minh nhật1", email: "K42cntt@gmail.com" , addresses: "KTX Khu E ,",phone:  "01673147733"},
+                {id: 102, name: "Huỳnh trọng nhận1", email: "K43cntt@gmail.com" , addresses: "KTX Khu D ,",phone:  "0933232444"},
+                {id: 103, name: "Huỳnh thị bich ngọc1", email: "K44cntt@gmail.com" , addresses: "KTX Khu B ,",phone:  "094343413"},
+            ];
+             var source1 = [
+                {id: 1, name: "Trần văn thằng", email: "K40cntt@gmail.com" , addresses:  "KTX Khu A ,", phone:  "0928431917"},
+                {id: 2, name: "Lương bằng quan", email: "K41cntt@gmail.com" ,addresses: "KTX Khu F ,", phone:  "0974613746"},
+                {id: 101, name: "Tai tắc sáng", email: "K42cntt@gmail.com" , addresses: "KTX Khu E ,",phone:  "01673147733"},
+                {id: 102, name: "Phan nữ thoại my", email: "K43cntt@gmail.com" , addresses: "KTX Khu D ,",phone:  "0933232444"},
+                {id: 103, name: "Tring văn chuối", email: "K44cntt@gmail.com" , addresses: "KTX Khu B ,",phone:  "094343413"},
+            ];
+               
+                var source3 = [
+                {id: 1, name: "tran", email: "K40cntt@gmail.com" , addresses:  "KTX Khu A ,", phone:  "0928431917"},
+                {id: 2, name: "le", email: "K41cntt@gmail.com" ,addresses: "KTX Khu F ,", phone:  "0974613746"},
+                {id: 101, name: "Phan", email: "K42cntt@gmail.com" , addresses: "KTX Khu E ,",phone:  "01673147733"},
+                {id: 102, name: "huynh trong nhan3", email: "K43cntt@gmail.com" , addresses: "KTX Khu D ,",phone:  "0933232444"},
+                {id: 103, name: "ho sy huy", email: "K44cntt@gmail.com" , addresses: "KTX Khu B ,",phone:  "094343413"},
+            ];
+               
+                    resetTabullet(source3);
+            function resetTabullet( source ) {
+                $("#table").tabullet({
+                    data: source,
+                    action: function (mode, data) {
+                        console.dir(mode);
+                        if (mode === 'save') {
+                            source.push(data);
+                            console.log(data);
+                        }
+                        if (mode === 'edit') {
+                            for (var i = 0; i < source.length; i++) {
+                                if (source[i].id == data.id) {
+                                    source[i] = data;
+                                    console.log(data);
+                                }
+                            }
+                        }
+                        if(mode == 'delete'){
+                            for (var i = 0; i < source.length; i++) {
+                                if (source[i].id == data) {
+                                    source.splice(i,1);
+                                    console.log(data);
+                                    break;
+                                }
+                            }
+                        }
+                        resetTabullet(source);
+                    }
+                });
+            }
+             $(".my-fc").on("click", "a" , function (){
+          
+             var id =$(this).attr("data-id");
+              
+             if(id == "1") {
+              
+               resetTabullet(source);
+                alert(id);
+             }else if(id == "2") {
+               resetTabullet(source1);
+                alert(id);
+             }else if(id == "3") {
+               resetTabullet(source3);
+                alert(id);
+             }
+        });
+
+           
+        });
+
+    </script>
+</head>
+<body>
+<!--    <div id="jquery-script-menu">
+<div class="jquery-script-center">
+<ul>
+
+</ul>
+
+</div>
+<div class="jquery-script-clear"></div>
+</div>-->
+
+<div class="container">
+    
+
+         <div class="panel panel-default">
+              <div class="panel-heading">
+                                    <h3 class="panel-title">Quản lý khách hàng</h3>
+                                    <div class="pull-right">
+                                        <button class="btn btn-danger toggle" data-toggle="exportTable"><i class="fa fa-bars"></i> Export Data</button>
+                                    </div>
+                                </div>
+              <div class="panel-body" id="exportTable" style="display:none">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="list-group border-bottom">
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'json',escape:'false'});"><img src='print/dist/img/json.png' width="24"/> JSON</a>
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'json',escape:'false',ignoreColumn:'[2,3]'});"><img src='print/dist/img/json.png' width="24"/> JSON (ignoreColumn)</a>
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'json',escape:'true'});"><img src='print/dist/img/json.png' width="24"/> JSON (with Escape)</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="list-group border-bottom">
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'xml',escape:'false',ignoreColumn:'[0,5,6]'});"><img src='print/dist/img/xml.png' width="24"/> XML</a>
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'sql'});"><img src='print/dist/img/sql.png' width="24"/> SQL</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="list-group border-bottom">
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'csv',escape:'false'});"><img src='print/dist/img/csv.png' width="24"/> CSV</a>
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'txt',escape:'false'});"><img src='print/dist/img/txt.png' width="24"/> TXT</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="list-group border-bottom">
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'excel',escape:'false',ignoreColumn:'[0,5,6]'});"><img src='print/dist/img/xls.png' width="24"/> XLS</a>
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'doc',escape:'false'});"><img src='print/dist/img/word.png' width="24"/> Word</a>
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'powerpoint',escape:'false'});"><img src='print/dist/img/ppt.png' width="24"/> PowerPoint</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="list-group border-bottom">
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'png',escape:'false'});"><img src='print/dist/img/png.png' width="24"/> PNG</a>
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'pdf',escape:'false'});"><img src='print/dist/img/pdf.png' width="24"/> PDF</a>
+                                            </div>
+                                        </div>
+                                    </div>                               
+                                </div>
+             
+            
+                   
+                    <div class="table-responsive">
+            <table  class="table table-hover" id="table">
+               
+                <thead>
+                   <tr data-tabullet-map="id">
+                    <th width="50" data-tabullet-map="_index" data-tabullet-readonly="true"> No
+                     </th>
+                   
+                    <th data-tabullet-map="name">name </th>
+                    <th data-tabullet-map="email">email</th>
+                    <th data-tabullet-map="addresses" > addresses </th>
+                         <th data-tabullet-map="phone">phone</th>
+                    <th width="50" data-tabullet-type="edit"></th>
+                    <th width="50" data-tabullet-type="delete"></th>
+                </tr>
+                </thead>
+            </table>
+                        <div class="col-md-12" >
+                   <ul class="pagination pagination-lg my-fc" style="float: right;">
+                       <li><a href="#">Sau</a></li>
+                       <li><a data-id="1" href="#">1</a></li>
+                       <li><a data-id="2" href="#">2</a></li>
+                       <li><a data-id="3" href="#">3</a></li>
+                       <li><a href="#">Trước</a></li>
+                              </ul>
+                        </div>
+                 </div>
+               </div>
+             
+         
+</div> 
+    
+   
+    
+  <script type="text/javascript" src="dist/js/print/tableExport.js"></script>
+  <script type="text/javascript" src="dist/js/print/jquery.base64.js"></script>
+  <script type="text/javascript" src="dist/js/print/html2canvas.js"></script>
+  <script type="text/javascript" src="dist/js/print/jspdf/libs/sprintf.js"></script>
+  <script type="text/javascript" src="dist/js/print/jspdf/jspdf.js"></script>
+  <script type="text/javascript" src="dist/js/print/jspdf/libs/base64.js"></script>
+     <script type="text/javascript">
+  // show Export
+$(document).ready(function(){   
+    /* TOGGLE FUNCTION */
+    $(".toggle").on("click",function(){
+        var elm = $("#"+$(this).data("toggle"));
+        if(elm.is(":visible"))
+            elm.addClass("hidden").removeClass("show");
+        else
+            elm.addClass("show").removeClass("hidden");
+        
+        return false;
+    });
+  });   
+  </script>
+
+</body>
+</html>

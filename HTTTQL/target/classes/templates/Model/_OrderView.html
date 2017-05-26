@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<section class="invoice">
+	<!-- title row -->
+	<div class="row">
+		<div class="col-xs-12">
+			<h2 class="page-header">
+				<i  class="fa fa-globe" > Hóa đơn <span th:text="${order.orderId}"></span> </i> <small
+					class="pull-right"> Ngày lập <span th:text="${order.orderedOn}"></span> </small>
+			</h2>
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- info row -->
+	<div class="row invoice-info">
+		<div class="col-sm-4 invoice-col">
+			Từ
+			   <address>
+            <strong><span th:text="${order.shippersName}"></span> </strong><br/>
+           Address: <span th:text="${order.address}"></span> <br/>
+            Phone: <span th:text="${order.mobileNumber}"></span> <br/>
+            Email: <span th:text="${order.shippersEmail}"></span>  
+          </address>
+		</div>
+		<!-- /.col -->
+
+		<!-- /.col -->
+
+		<!-- /.col -->
+	</div>
+	<!-- /.row -->
+
+	<!-- Table row -->
+
+	<div class="row">
+		<div class="col-xs-12 table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Tên</th>
+						<th>Giá</th>
+						<th>Số lượng</th>
+						<th>Tổng tiền</th>
+					</tr>
+				</thead>
+				<tbody>
+				 
+        <tr th:each="o : ${order.salesList}" >
+       
+         <td th:text="${o.productName}">TEN SAN PHAM</td>
+         <td th:text="${o.productPrice}">TEN SAN PHAM</td>
+          <td th:text="${o.productQuantity}">So luong</td>
+           <td th:text="${o.productQuantity*o.productPrice}">So luong</td>
+          
+          <td>
+         
+            </td>
+         </tr>
+	
+				</tbody>
+			</table>
+		</div>
+		<!-- /.col -->
+	</div>
+
+	<!-- /.row -->
+
+	<div class="row">
+		<!-- accepted payments column -->
+
+		<!-- /.col -->
+		<div class="col-xs-6">
+			<div class="table-responsive">
+				<table class="table">
+					<tbody>
+						<tr>
+							<th>Tổng tiền:</th>
+							<td> <span  th:text="${order.totalOrderPrice}"></span> </td>
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- /.row -->
+
+	<!-- this row will not appear when printing -->
+
+</section>
+</html>

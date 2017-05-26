@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS & JS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+</head>
+<body >
+
+
+
+<div ng-app="myapp">
+  <p>Name : <input type="text" ng-model="name"/></p>
+  <h1>Hello {{name}}</h1>
+  <h1 ng-bind="name"> </h1>
+  {{demo}}
+</div>
+
+<div data-ng-app=""  data-ng-app-init="name1='hynh'"></div>
+<h1 data-ng-bind="name1"></h1>
+</body>
+</html>

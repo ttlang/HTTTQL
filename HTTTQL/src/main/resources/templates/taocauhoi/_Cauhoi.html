@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8" />
+<head>
+
+<title>Insert title here</title>
+</head>
+<body>
+ <th:block th:if="${cauhoi ==null}">
+  Không có câu hỏi nào
+  </th:block>
+ <th:block th:if="${cauhoi!=null}">
+
+<table class="table table-hover">
+          <tbody>
+              <tr>
+              <th>Mã câu hỏi</th>
+              <th>Nội dung</th>
+              <th>Trạng thái</th>
+              <th>Thuôc chương</th>
+              <th>Tổng số đáp án</th>
+            </tr>
+             <th:block th:each="ch:${cauhoi.cauHoiList}">
+            <tr >
+              <td th:text="${ch.mach}">1</td>
+              <td th:text="${ch.noidung}" >Nội dung</td>
+              <td th:text="${ch.trangthai}" >Nội dung</td> 
+              <td th:text="${ch.machuong.tieude}" >Chương 1</td>
+              <td th:text="${#lists.size(ch.dapAnList)}">Dễ</td>
+              <td><a   class="xoa"  href="#" th:attr="data-id=${ch.mach}" ><i class=" fa fa-close"></i>&nbsp;Xóa</a></td>
+              <td>
+              
+<a class="btn btn-primary sua" th:attr="data-id=${ch.mach}" data-toggle="modal" href='#modal-id'> Chi tiết</a>
+
+       </td>
+            </tr>
+            </th:block>
+           
+                  </tbody>
+              </table>
+              <div class="col-sm-6">
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <td>Tổng câu</td>
+                <td th:text="${#lists.size(cauhoi.cauHoiList)}">  </td>
+              </tr>
+             
+            </tbody>
+          </table>
+        </div>
+              
+</th:block>
+
+
+<div  class="modal fade huynhtinhthanh" id="modal-id">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div id="viewcauhoi" class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+        <button  id="close-cauhoi" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="edit-cauhoi" type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script th:inline="javascript" >
+
+         $(".xoa").click(function (){      	
+            var div = $(this);
+            $.ajax({
+              url : '/taocauhoi/xoa/'+$(this).attr("data-id"),
+              type : 'GET' ,
+              success : function ( response) {
+                  if(response == true) {
+                    alert("xoa thanh cong" ) ;
+                    
+                    div.parents("tr").remove();
+
+
+                  }else{
+                    alert("xoa khong thanh cong đã là đề thi chisng thức " +response) ;
+                  }
+              }
+            });
+             return false;
+         });
+         $(".sua").click(function(event) {
+           /* Act on the event */ 
+           $.ajax({
+               url : '/taocauhoi/findOne/'+$(this).attr("data-id"),
+               type : 'GET' ,
+               success : function ( response) {
+            	   $("#viewcauhoi").html(response);
+               }
+             });
+             
+         });
+
+
+          function CauHoiDao( mach ,
+                              noidung , 
+                              mamh  ,
+                        madokho,
+                        magv ,
+                        list 
+                   ){
+                    this.mach = mach ;
+                    this.noidung = noidung ;
+                    this.mamh = mamh ;
+                    this.madokho = madokho ;
+                    this.magv = magv ;
+                    this.list = list ;
+                    
+                  }
+                  function DapAnDao( mach ,
+                       madn,
+                       noidung ,
+                       dapandung ){
+                      this.mach = mach  ;
+                    this.noidung = noidung ;
+                    this.dapandung = dapandung ;
+                  }
+                  
+                  var cau = new CauHoiDao() ;
+
+   
+                    $("#edit-cauhoi").click(function(event) {
+                      /* Act on the event */
+                       cau.mach =  $("#mach").attr("data-id");
+                       cau.noidung =  $("#noidung1").val() ;
+                       cau.madokho = $("#madokho1").val();
+                    
+
+                         var obj  = [];
+
+                      if( parseInt($("#socau").attr('data-id'))  > 1  ) {
+                          alert($("#tracnghiem1").attr('id'));
+                               
+
+                          $("#tracnghiem1 .v1").each(function(index, el) {
+                              var list  = new DapAnDao () ;
+
+                            
+                            
+                             var noidung =  $(this).parents('.input-group').find('.v2').val();
+                              
+                                           
+                          
+                                 list.dapandung =  $(this).is(':checked') ;
+                                  list.noidung  = noidung ;                      
+                                  obj.push(list); 
+                               
+                            });
+                          
+                      }
+                    if(parseInt($("#socau").attr('data-id')) == 1 ) {
+                           alert($("#tuluan1").attr('id'));
+                            var list  = new DapAnDao () ; 
+                             list.noidung = $("#noidungdapan1").val() ;
+                             list.dapandung = true ;
+                             obj.push(list);
+                      }
+
+                      cau.list = obj ;
+
+                               $.ajax({
+                        type: "POST",
+                        contentType : 'application/json; charset=utf-8',
+                        dataType : 'json',
+                        url: "/taocauhoi/chinhsua",
+                        data: JSON.stringify(cau), // Note it is important
+                        success :function(response) {
+                         // do what ever you want with data
+                                          console.log(response);
+                           if(response ==  'true') {
+                             
+                             alert("meo them dc");
+                           }else{
+                             
+                             alert("them thanh cong ");
+                                    $("#close-cauhoi").click();
+                                    $(".modal-backdrop").remove();
+                                     $('.bs-example-modal-lg').modal('show');
+                                     $('.bs-example-modal-lg').modal('hide');
+                                          $.ajax({
+                                                url: '/taocauhoi/cauhoi/'+ $("#viewmonhoc").val() ,
+                                                type: 'GET' ,
+                                                success : function( response){
+                                                  $("#loading").html(response);
+                                                }
+                                              })
+                                              .done(function() {
+                                                console.log("success");
+                                              })
+                                              .fail(function() {
+                                                console.log("error");
+                                              })
+                                              .always(function() {
+                                                console.log("complete");
+                                              });
+                             
+                            
+                              
+                             
+                           }   
+                         
+                        
+                       }
+                    }).done(function() {
+                          console.log("success");
+                         })
+                         .fail(function() {
+                          console.log("error");
+                         })
+                         .always(function() {
+                          console.log("complete");
+                         });
+
+
+                console.log(cau);
+		
+                      
+
+                    });
+
+  </script>
+
+ 
+</body>
+</html>

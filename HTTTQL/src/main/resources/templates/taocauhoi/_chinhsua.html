@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8" />
+<head>
+
+<title>Insert title here</title>
+</head>
+<body>
+ <th:block th:if="${cauhoi ==null}">
+  ma cau hoi khong dung
+  </th:block>
+ <th:block th:if="${cauhoi!=null}">
+  <div id="mach" th:attr="data-id=${cauhoi.mach}" ></div> <br/>
+    <div id="socau" th:attr="data-id=${#lists.size(cauhoi.dapAnList)}" ></div>
+  <div class="form-group">
+<label for="content">Nội dung</label>
+	<textarea id="noidung1" th:text="${cauhoi.noidung}" class="form-control" rows="3" placeholder="Nội dung"></textarea>
+	</div>
+              
+<div class="form-group">
+											<label for="level">Mức độ</label>
+											
+											 <select class="form-control" id="madokho1">
+
+
+												<option value="1">Khó</option>
+												<option value="2">Dễ</option>
+												<option value="3">Trung bình</option>
+
+											</select>
+										</div>
+
+
+
+<th:block th:if="${#lists.size(cauhoi.dapAnList)}==1" >
+ 
+ <div class="form-group" id="tuluan1" >
+                    <label for="exampleInputEmail1">Đáp án dạng tự luận </label>
+                   <th:block th:each="e:${cauhoi.dapAnList}">           
+                   <textarea th:text="${e.noidung}" id="noidungdapan1" class="form-control" rows="3" placeholder="Nội dung"></textarea>
+                  
+                  </th:block>
+                   </div>
+ 
+</th:block>
+<th:block th:if="${#lists.size(cauhoi.dapAnList) > 1}">
+
+<div class="form-group">
+                 
+                <div data-toggle="buttons" id="tracnghiem1" >
+           <th:block th:each="e:${cauhoi.dapAnList}">           
+           <div class="form-group">
+           <div class="input-group"><span class="input-group-addon">
+           <th:block th:if="${e.dapandung}==true">
+            <input class="v1"  th:checked="checked" type="checkbox" aria-label="Checkbox for following text input"/>
+           
+           </th:block>
+             <th:block th:if="${e.dapandung}==false">
+             <input class="v1"  type="checkbox" aria-label="Checkbox for following text input"/>
+           
+             </th:block>
+           </span>
+           <input type="text" th:value="${e.noidung}" class="form-control v2" placeholder=" Đáp án B" aria-label="Text input with checkbox"/></div></div>
+                
+             </th:block>     
+                </div>
+									
+									
+									
+										</div>
+
+
+</th:block>
+
+
+
+<script th:inline="javascript">
+	
+
+									
+
+									
+</script>
+
+</th:block>
+ 
+</body>
+</html>

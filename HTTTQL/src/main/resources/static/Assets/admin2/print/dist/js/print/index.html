@@ -1,0 +1,175 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jQuery Tabullet Plugin Example</title>
+  
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    
+    <!--Load Json xoa edit-->
+<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+ <script src="dist/Tabullet.js"></script>
+    <!--load json xoa edit-->
+    <style type="text/css" >
+        .table-responsive{
+           width: 100%;
+        }
+    </style>
+    <script>
+        $(function () {
+            var source = [
+                {id: 1, name: "Aditya Purwa", level: "Admin" ,pass:  "thanh",pass1:  "thanh"},
+                {id: 2, name: "Aditya Avaga", level: "Manager" ,pass: "lon",pass1:  "thanh"},
+                {id: 101, name: "Aditya Myria", level: "User" , pass: "con khi",pass1:  "thanh"},
+                {id: 102, name: "Lucent Serentia", level: "LOD" , pass: "cailon",pass1:  "thanh"},
+                {id: 103, name: "Hayden Bapalthiel", level: "King" , pass : "du ma",pass1:  "thanh"},
+            ];
+               
+
+            function resetTabullet() {
+                $("#table").tabullet({
+                    data: source,
+                    action: function (mode, data) {
+                        console.dir(mode);
+                        if (mode === 'save') {
+                            source.push(data);
+                            console.log(data);
+                        }
+                        if (mode === 'edit') {
+                            for (var i = 0; i < source.length; i++) {
+                                if (source[i].id == data.id) {
+                                    source[i] = data;
+                                    console.log(data);
+                                }
+                            }
+                        }
+                        if(mode == 'delete'){
+                            for (var i = 0; i < source.length; i++) {
+                                if (source[i].id == data) {
+                                    source.splice(i,1);
+                                    console.log(data);
+                                    break;
+                                }
+                            }
+                        }
+                        resetTabullet();
+                    }
+                });
+            }
+
+            resetTabullet();
+        });
+
+    </script>
+</head>
+<body><div id="jquery-script-menu">
+<div class="jquery-script-center">
+<ul>
+
+</ul>
+
+</div>
+<div class="jquery-script-clear"></div>
+</div>
+
+<div class="container">
+    
+
+         <div class="panel panel-default">
+              <div class="panel-heading">
+                                    <h3 class="panel-title">Export HTML Table Demo</h3>
+                                    <div class="pull-right">
+                                        <button class="btn btn-danger toggle" data-toggle="exportTable"><i class="fa fa-bars"></i> Export Data</button>
+                                    </div>
+                                </div>
+              <div class="panel-body" id="exportTable" style="display:none">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="list-group border-bottom">
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'json',escape:'false'});"><img src='http://demos.w3lessons.info/assets/images/icons/json.png' width="24"/> JSON</a>
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'json',escape:'false',ignoreColumn:'[2,3]'});"><img src='http://demos.w3lessons.info/assets/images/icons/json.png' width="24"/> JSON (ignoreColumn)</a>
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'json',escape:'true'});"><img src='http://demos.w3lessons.info/assets/images/icons/json.png' width="24"/> JSON (with Escape)</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="list-group border-bottom">
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'xml',escape:'false'});"><img src='http://demos.w3lessons.info/assets/images/icons/xml.png' width="24"/> XML</a>
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'sql'});"><img src='http://demos.w3lessons.info/assets/images/icons/sql.png' width="24"/> SQL</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="list-group border-bottom">
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'csv',escape:'false'});"><img src='http://demos.w3lessons.info/assets/images/icons/csv.png' width="24"/> CSV</a>
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'txt',escape:'false'});"><img src='http://demos.w3lessons.info/assets/images/icons/txt.png' width="24"/> TXT</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="list-group border-bottom">
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'excel',escape:'false'});"><img src='http://demos.w3lessons.info/assets/images/icons/xls.png' width="24"/> XLS</a>
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'doc',escape:'false'});"><img src='http://demos.w3lessons.info/assets/images/icons/word.png' width="24"/> Word</a>
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'powerpoint',escape:'false'});"><img src='http://demos.w3lessons.info/assets/images/icons/ppt.png' width="24"/> PowerPoint</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="list-group border-bottom">
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'png',escape:'false'});"><img src='http://demos.w3lessons.info/assets/images/icons/png.png' width="24"/> PNG</a>
+                                                <a href="#" class="list-group-item" onClick ="$('#table').tableExport({type:'pdf',escape:'false'});"><img src='http://demos.w3lessons.info/assets/images/icons/pdf.png' width="24"/> PDF</a>
+                                            </div>
+                                        </div>
+                                    </div>                               
+                                </div>
+             
+            
+                   
+                    <div class="table-responsive">
+            <table  class="table table-hover" id="table">
+               
+                <thead>
+                   <tr data-tabullet-map="id">
+                    <th width="50" data-tabullet-map="_index" data-tabullet-readonly="true"> No
+                     </th>
+                   
+                    <th data-tabullet-map="name">Nama</th>
+                    <th data-tabullet-map="level">Level</th>
+                    <th data-tabullet-map="pass">pass</th>
+                         <th data-tabullet-map="pass1">pass1</th>
+                    <th width="50" data-tabullet-type="edit"></th>
+                    <th width="50" data-tabullet-type="delete"></th>
+                </tr>
+                </thead>
+            </table>
+                 </div>
+               </div>
+             
+         
+</div>
+    
+   
+    
+  <script type="text/javascript" src="dist/js/print/tableExport.js"></script>
+  <script type="text/javascript" src="dist/js/print/jquery.base64.js"></script>
+  <script type="text/javascript" src="dist/js/print/html2canvas.js"></script>
+  <script type="text/javascript" src="dist/js/print/jspdf/libs/sprintf.js"></script>
+  <script type="text/javascript" src="dist/js/print/jspdf/jspdf.js"></script>
+  <script type="text/javascript" src="dist/js/print/jspdf/libs/base64.js"></script>
+     <script type="text/javascript">
+
+$(document).ready(function(){   
+    /* TOGGLE FUNCTION */
+    $(".toggle").on("click",function(){
+        var elm = $("#"+$(this).data("toggle"));
+        if(elm.is(":visible"))
+            elm.addClass("hidden").removeClass("show");
+        else
+            elm.addClass("show").removeClass("hidden");
+        
+        return false;
+    });
+  });   
+  </script>
+
+</body>
+</html>

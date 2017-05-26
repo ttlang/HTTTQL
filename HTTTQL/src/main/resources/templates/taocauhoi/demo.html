@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		
+		function CauHoiDao( mach ,
+            noidung , 
+            mamh  ,
+ 			madokho,
+ 			magv ,
+ 			list 
+ ){
+	this.mach = mach ;
+	this.noidung = noidung ;
+	this.mamh = mamh ;
+	this.madokho = madokho ;
+	this.magv = magv ;
+	this.list = list ;
+	
+}
+function DapAnDao( mach ,
+	   madn,
+	   noidung ,
+	   dapandung ){
+	this.mach = mach  ;
+	this.noidung = noidung ;
+	this.dapandung = dapandung ;
+}
+  		var test  = new CauHoiDao();
+  		  test.mach = 1 ;
+  		   test.noidung = 'hunh thanh ';
+  		   test.mamh  = 123 ;
+  		   this.madokho = 1 ;
+  		   test.magv = 1 ;
+
+
+  		  var list  = new DapAnDao () ;
+  		    list.mach = 1 ;
+  		    list.noidung = 'dap an 1' ;
+  		    list.dapandung = true  ;
+         
+       var obj  = [];
+        obj.push(list); 
+        obj.push(list); 
+
+        test.list = obj ;
+        console.log(test)
+
+       
+         $.ajax({
+      type: "POST",
+      contentType : 'application/json; charset=utf-8',
+      dataType : 'json',
+      url: "/taocauhoi/save",
+      data: JSON.stringify(test), // Note it is important
+      success :function(result) {
+       // do what ever you want with data
+       alert(result);
+       console.log(result);
+       alert("hh");
+     }
+  });
+	</script>
+</body>
+</html>

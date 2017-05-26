@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8" />
+<head>
+
+<title>Insert title here</title>
+</head>
+<body>
+
+									<div class="modal-body">
+
+										<div class="form-group">
+											<th:block th:if="${#lists.isEmpty(GV.monHocList)}">
+												<label for="chapter"> Chưa được phân công dạy </label>
+											</th:block>
+
+											<th:block th:unless="${#lists.isEmpty(GV.monHocList)}">
+
+												<label for="chapter">Môn học </label>
+												<select class="form-control" id="monhoc">
+													<th:block th:each="mh:${GV.monHocList}">
+														<option th:attr="data-id=${mh.mamon}"  th:value="${mhStat.index}" th:text="${mh.tenmon}"></option>
+													</th:block>
+												</select>
+											</th:block>
+
+										</div>
+										<div class="form-group">
+											<th:block th:if="${#lists.isEmpty(CHUONG)}">
+												<label th:text="${msg}"></label>
+											</th:block>
+
+
+											<th:block th:unless="${#lists.isEmpty(CHUONG)}">
+												<label for="chapter">Chương </label> 
+												<select class="form-control" id="machuong" >
+													<th:block th:each="ch:${CHUONG}">
+														<option th:value="${ch.machuong}" th:text="${ch.tieude}"></option>
+													</th:block>
+												</select>
+												<div class="form-group">
+											<label for="content">Nội dung</label>
+											<textarea id="noidung" class="form-control" rows="3"
+												placeholder="Nội dung"></textarea>
+									               	</div>
+								<div class="form-group">
+											<label for="level">Mức độ</label>
+											
+											 <select
+												class="form-control" id="madokho">
+
+
+												<option  value="1">Khó</option>
+												<option value="2">Dễ</option>
+												<option value="3">Trung bình</option>
+
+											</select>
+										</div>
+                                       <div class="form-group" >
+                                       <label for="answer1">Chọn đáp án</label> <br/>
+                                                                        
+                <div class="btn btn-default"><i class="fa fa-refresh"></i>&nbsp;Trắc nghiệm
+                
+                       <select th:id="select-tracnghiem"  class="form-control" >
+
+
+												<option  value="1">Chọn số lượng đáp án</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="7">7</option>
+											    <option value="8">8</option>
+											    <option value="9">9</option>
+
+											</select>
+                
+                </div>
+                
+               
+            
+                <button th:id="select-tuluan" type="button" class="btn btn-primary"><i class="fa fa-check-circle"></i>&nbsp;Tự luận</button>
+              </div>
+                   <div  th:id="tuluan" class="form-group">
+                  
+                  
+                    <label for="exampleInputEmail1">Đáp án dạng tự luận </label>
+                  
+                   <textarea id="noidungdapan" class="form-control" rows="3"
+												placeholder="Nội dung"></textarea>
+                   </div>
+                <div class="form-group">
+                 
+                <div data-toggle="buttons" id="tracnghiem" style="display: block;">
+
+
+       
+    <div class="col-lg-12">
+    <div class="input-group">
+      <span class="input-group-addon">
+        <input class="v1" type="checkbox" aria-label="Checkbox for following text input"/>
+      </span>
+      <input type="text"  class="form-control v2" aria-label="Text input with checkbox"/>
+    </div>
+  </div>
+     
+                                   
+                                   
+                                   
+                                   
+										</div>
+										</div>
+ 
+                
+										<div style="margin: 38px;" class="form-group">
+										<div style="padding-top: 30px;" class="text-right">
+                <button type="button" class="btn btn-default"><i class="fa fa-refresh"></i>&nbsp;Làm lại</button>
+                <button id="luulai" type="button" class="btn btn-primary"><i class="fa fa-check-circle"></i>&nbsp; Lưu lại</button>
+              
+ </div>
+ </div>
+
+
+						
+											</th:block>
+
+					
+										</div>
+										
+
+										
+										
+									</div>
+<script type="text/javascript" th:inline="javascript">
+										/*<![CDATA[*/
+       
+
+										var id = /*[[${id}]]*/'1';
+
+										$(document)
+												.ready(
+														function() {
+															$(
+																	"#monhoc option[value='"
+																			+ id
+																			+ "']")
+																	.attr(
+																			'selected',
+																			'selected');
+															$("#monhoc")
+																	.change(
+																			function(
+																					event) {
+																				/* Act on the event */
+																		var url  =  '/taocauhoi/' + $(
+                                                this)
+                                                .val();
+                                        /* Act on the event */
+                                        $.ajax({
+                                          url: url,
+                                          type: 'GET' ,
+                                          success : function( response){
+                                            $("#container").html(response);
+                                          }
+                                        })
+                                        .done(function() {
+                                          console.log("success");
+                                        })
+                                        .fail(function() {
+                                          console.log("error");
+                                        })
+                                        .always(function() {
+                                          console.log("complete");
+                                        });
+
+																			});
+														});
+
+                                 
+
+										// var test  = new CauHoiDao();
+									  		//   test.mach = 1 ;
+									  		//    test.noidung = 'hunh thanh ';
+									  		//    test.mamh  = 123 ;
+									  		//    this.madokho = 1 ;
+									  		//    test.magv = 1 ;
+
+
+									  		//   var list  = new DapAnDao () ;
+									  		//     list.mach = 1 ;
+									  		//     list.noidung = 'dap an 1' ;
+									  		//     list.dapandung = true  ;
+									         
+									    //    var obj  = [];
+									    //     obj.push(list); 
+									    //     obj.push(list); 
+
+									    //     test.list = obj ;
+									    //     console.log(test)
+
+									       
+									         
+	
+										
+										$(document).ready(function() {
+											 var   abc = ['A' , 'B' , 'C' , 'D' , 'E' , 'F' , 'G' ,'H','I'] ;
+											 console.log(abc) ;
+                                         var isTracNghiem = true ;
+                                             $("#tuluan").hide();
+										   	$("#tracnghiem").hide();
+
+										  $("#select-tuluan").on('click' , function(){
+                                                 $("#tuluan").show();
+                                                 $("#tracnghiem").hide();
+                                                 isTracNghiem = false ;
+										  })
+										  $("#select-tracnghiem").on('change', function(){
+										  		var size = $(this).val();
+										  	var html = '' ;
+										  	 for(var i = 0 ;  i < size ; i++ ){
+										  	       html+= ' <div class="form-group">'
+                                                    +'<div class="input-group">'
+                                                 +'<span class="input-group-addon">'
+                                        +'<input  class="v1" type="checkbox" aria-label="Checkbox for following text input"/>'
+                                          +'</span>'
+                              +'<input  type="text" class="form-control v2" placeholder=" Đáp án '+abc[i]+'"  aria-label="Text input with checkbox"/>'
+                                   +'</div>'
+                                     +'</div>';
+										  	 }
+										    $("#tracnghiem").html(html);
+										  	$("#tuluan").hide();
+										  	$("#tracnghiem").show();
+										  	isTracNghiem = true ;
+										  });	
+										
+											function CauHoiDao( mach ,
+									            noidung , 
+									            mamh  ,
+									 			madokho,
+									 			magv ,
+									 			list 
+									 ){
+										this.mach = mach ;
+										this.noidung = noidung ;
+										this.mamh = mamh ;
+										this.madokho = madokho ;
+										this.magv = magv ;
+										this.list = list ;
+										
+									}
+									function DapAnDao( mach ,
+										   madn,
+										   noidung ,
+										   dapandung ){
+									   	this.mach = mach  ;
+										this.noidung = noidung ;
+										this.dapandung = dapandung ;
+									}
+									  	
+                                       $("#luulai").click(function(event) {
+                                       	/* Act on the event */
+                                       		var test  = new CauHoiDao();
+									  		  test.mach = document.getElementById("machuong").value ;
+									  		   test.noidung = document.getElementById("noidung").value ;
+									  		   test.mamh  = document.getElementById("monhoc").value ;
+									  		   test.madokho = document.getElementById("madokho").value ;
+									  		   test.magv = 0 ;
+									  		   	if(test.noidung == '' || test.noidung == null){
+									  		   		alert("bạn chưa nhập câu hỏi");
+									  		   		return false ;
+									  		   	}
+                                               
+									  		 
+									  		    var obj  = [];
+									  		    var flat = 0 ;
+ 											   if(isTracNghiem){
+ 											   		$("#tracnghiem .v1").each(function(index, el) {
+ 											   			var list  = new DapAnDao () ;
+
+ 											   		
+ 											   		
+ 											   		 var noidung =	$(this).parents('.input-group').find('.v2').val();
+ 											   			
+                                           
+ 											   			 if(noidung == ''){
+ 											   			 	alert(' Đáp án không được để trống');
+ 											   			 	flat++;
+ 											   			 	
+ 											   			 }else{
+ 											   			 	 list.dapandung =  $(this).is(':checked') ;
+ 											   			 	  list.noidung  = noidung ; 						   			 
+                                                               obj.push(list); 
+ 											   			 }
+ 											   		});
+ 											   		test.list = obj ;
+ 											   		
+ 											   		
+
+ 											   }else{
+ 											    var list  = new DapAnDao () ;
+                                                 list.mach = 0 ;
+                                                 var k =document.getElementById("noidungdapan").value ;                                                
+                                                 if( k == '') {
+                                                 	alert("Đáp án tự luận không được để trống") ;
+                                                 	flat++;
+                                                 }else{
+                                                 	 list.noidung = k ;
+                                                 }
+                                                 list.dapandung = true  ;
+                                                 test.list = obj ;
+                                                   obj.push(list); 
+                                                   console.log(test);
+ 											   }
+ 											   if(flat ==0){
+ 											   	   $.ajax({
+									      type: "POST",
+									      contentType : 'application/json; charset=utf-8',
+									      dataType : 'json',
+									      url: "/taocauhoi/save",
+									      data: JSON.stringify(test), // Note it is important
+									      success :function(response) {
+									       // do what ever you want with data
+			                                    console.log(response);
+									         if(response.noidung == null) {
+									        	 
+									        	 alert("meo them dc");
+									         }else{
+									        	 
+									        	 alert("them thanh cong ");
+									        	
+									        	  $.ajax({
+			                                          url: '/taocauhoi/cauhoi/'+ $("#monhoc").val() ,
+			                                          type: 'GET' ,
+			                                          success : function( response){
+			                                            $("#loading").html(response);
+			                                          }
+			                                        })
+			                                        .done(function() {
+			                                          console.log("success");
+			                                        })
+			                                        .fail(function() {
+			                                          console.log("error");
+			                                        })
+			                                        .always(function() {
+			                                          console.log("complete");
+			                                        });
+									        	 
+									        	 
+									        	  $("#pop-close").click();
+										        	
+									        	 
+									         }   
+									       
+									      
+									     }
+									  }).done(function() {
+								         	console.log("success");
+								         })
+								         .fail(function() {
+								         	console.log("error");
+								         })
+								         .always(function() {
+								         	console.log("complete");
+								         });
+ 											   }
+							
+
+                                       	return false;
+                                       });
+
+                                       });
+										/*]]>*/
+									</script>
+
+</body>
+</html>

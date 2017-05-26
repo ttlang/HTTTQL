@@ -1,0 +1,56 @@
+@charset "utf-8";
+
+body {
+	background-color: currentColor;
+	font-family: Times New Roman;
+	font-size: 14px;
+}
+.content-a4 {
+/*	width: 793.700787px;*/
+/*	height: 1122.519685px;*/
+	height: auto;
+	background-color: #FFFFFF;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	padding-top: 40px;
+	padding-bottom: 100px;
+}
+.menu {
+	color: #FFFFFF;
+}
+
+.uppercase {
+	text-transform: uppercase;
+}
+
+.phan-tracnghiem, .phan-tuluan {
+	font-size: 16px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.content {
+	padding-left: 100px;
+}
+
+.cauhoi {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.cauhoiso {
+	text-decoration: underline;
+}
+
+.noidung-cauhoi {
+	font-weight: bold;
+}
+
+.dapan {
+	font-weight: bold;
+}
+
+.form-class {
+	border-radius: 0;
+	outline: 0;
+}
